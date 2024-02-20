@@ -13,7 +13,7 @@ import Root from "./routes/Root";
 const routes = [
   {
     path: "/", 
-    element: <Root />, 
+    element: <Root menu={Menu}/>, 
     errorElement: <Error />,
     children: [ ...Menu ]
   }
