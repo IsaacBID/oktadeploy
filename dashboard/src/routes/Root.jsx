@@ -12,25 +12,29 @@ export default function Root({menu}) {
             footer={{ height: 32}}
             padding="md"
             layout="alt"
-            withBorder={true}
+            withBorder={false}
         >
 
             <AppShell.Header>
-                <Group h="100%" px="md">
+                <Group h="100%" px="md" c="white" bg="bid-blue">
                     <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-                    <Title order={3}>Okta Deploy Dashboard</Title>
+                    <Title order={3}>Okta Deploy</Title>
                 </Group>
             </AppShell.Header>
 
-            <AppShell.Navbar p="md">
+            <AppShell.Navbar p="md" bg="bid-blue">
                 <CloseButton onClick={toggle} hiddenFrom="sm" />
                     <Group direction="column" spacing="md">
                         {menu.map((item, index) => (
-                            <NavLink key={index} to={item.path} style={{textDecoration:"none", width:"100%", color: 'inherit'}}>
+                            <NavLink 
+                                key={index} 
+                                to={item.path} 
+                                style={{textDecoration:"none", width:"100%", color: 'inherit'}}
+                            >
                                 {(isActive) => (
-                                    <Group py="3" bg={isActive?"yellow":''}>
+                                    <Group py="4" pl="6" bg={isActive?"bid-orange":''} c="white" style={{borderRadius:"5px"}}>
                                         {item.icon}
-                                        <Title order={4}>{item.title}</Title>
+                                        <Title order={5}>{item.title}</Title>
                                     </Group>
                                 )}
                             </NavLink>

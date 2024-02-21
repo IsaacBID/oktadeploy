@@ -5,8 +5,9 @@ import { useForm } from '@mantine/form';
 export default function App() {
     const form = useForm({
         initialValues: {
-          email: '',
           termsOfService: false,
+          tenant: '',
+          apikey: '',
         },
     
         validate: {
@@ -17,16 +18,25 @@ export default function App() {
       return (
         <Box maw={340} mx="auto">
           <form onSubmit={form.onSubmit((values) => console.log(values))}>
-            <TextInput
+            
+
+            <TextInput 
               withAsterisk
-              label="Email"
-              placeholder="your@email.com"
-              {...form.getInputProps('email')}
+              label="Tenant"
+              placeholder="your Okta URL"
+              {...form.getInputProps('tenant')}
+            />
+
+            <TextInput 
+              withAsterisk
+              label="API Key"
+              placeholder="your API KEY"
+              {...form.getInputProps('apikey')}
             />
     
             <Checkbox
               mt="md"
-              label="I agree to sell my privacy"
+              label="Remember tenant"
               {...form.getInputProps('termsOfService', { type: 'checkbox' })}
             />
     
