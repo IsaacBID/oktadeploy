@@ -17,29 +17,29 @@ export default function Root({menu}) {
 
             <AppShell.Header>
                 <Group h="100%" px="md" c="white" bg="bid-blue">
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" color="white"/>
                     <Title order={3}>Okta Deploy</Title>
                 </Group>
             </AppShell.Header>
 
             <AppShell.Navbar p="md" bg="bid-blue">
-                <CloseButton onClick={toggle} hiddenFrom="sm" />
-                    <Group direction="column" spacing="md">
-                        {menu.map((item, index) => (
-                            <NavLink 
-                                key={index} 
-                                to={item.path} 
-                                style={{textDecoration:"none", width:"100%", color: 'inherit'}}
-                            >
-                                {(isActive) => (
-                                    <Group py="4" pl="6" bg={isActive?"bid-orange":''} c="white" style={{borderRadius:"5px"}}>
-                                        {item.icon}
-                                        <Title order={5}>{item.title}</Title>
-                                    </Group>
-                                )}
-                            </NavLink>
-                        ))}
-                    </Group>
+                <Group direction="column" spacing="md" justify="center">
+                <CloseButton onClick={toggle} hiddenFrom="sm" variant="transparent" c="white"/>
+                    {menu.map((item, index) => (
+                        <NavLink 
+                            key={index} 
+                            to={item.path} 
+                            style={{textDecoration:"none", width:"100%", color: 'inherit'}}
+                        >
+                            {(isActive) => (
+                                <Group py="4" pl="6" bg={isActive?"bid-orange":''} c="white" style={{borderRadius:"5px"}}>
+                                    {item.icon}
+                                    <Title order={5}>{item.title}</Title>
+                                </Group>
+                            )}
+                        </NavLink>
+                    ))}
+                </Group>
             </AppShell.Navbar>
 
             <AppShell.Main>
@@ -47,7 +47,7 @@ export default function Root({menu}) {
             </AppShell.Main>
 
             <AppShell.Footer >
-                <Text ta="center">BeyondID &copy; {new Date().getFullYear()}</Text>
+                <Text ta="center" c="dimmed">BeyondID &copy; {new Date().getFullYear()}</Text>
             </AppShell.Footer>
 
         </AppShell>
