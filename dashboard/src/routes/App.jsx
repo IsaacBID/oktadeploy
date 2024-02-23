@@ -1,23 +1,22 @@
-import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
+import { TextInput, Button, Group, Box, ScrollArea, Flex, SimpleGrid, Paper, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useState } from 'react';
 
+import { applist } from '../testdata';
 
 export default function App() {
+    const [appList, setAppList] = useState(applist); 
     const form = useForm({
         initialValues: {
-          termsOfService: false,
           tenant: '',
           apikey: '',
-        },
-    
-        validate: {
-          email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-        },
+        }
       });
     
       return (
-        <Box maw={340} mx="auto">
-          <form onSubmit={form.onSubmit((values) => console.log(values))}>
+        <>
+        <Box maw={340}>
+          <form onSubmit={form.onSubmit((values) => {console.log(values); })}>
             
 
             <TextInput 
@@ -34,16 +33,33 @@ export default function App() {
               {...form.getInputProps('apikey')}
             />
     
-            <Checkbox
-              mt="md"
-              label="Remember tenant"
-              {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-            />
     
             <Group justify="flex-end" mt="md">
-              <Button type="submit">Submit</Button>
+              <Button type="submit">Get App List</Button>
             </Group>
           </form>
         </Box>
+
+        <Paper shadow='xs'>
+          <ScrollArea mt="48" mih="400">
+            <SimpleGrid cols={{xs: 1, sm: 2, md:3}} h="100%" p="10">
+              {appList.map((app, index) => 
+                
+                <Flex
+                  key={index} 
+                  style={{border: "1px solid lightgray", borderRadius:"5px"}}
+                  p="xs"
+                  gap="xs"
+                >
+                  <img src={app._links.logo[0].href} alt={app.label} width="24" height="24" />
+                  <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{app.label}</Text>
+                </Flex>
+              )}
+            </SimpleGrid>
+          </ScrollArea>
+
+        </Paper>
+
+        </>
       );
 }
