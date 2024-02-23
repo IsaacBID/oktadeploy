@@ -23,7 +23,7 @@ export default function Root({menu}) {
             </AppShell.Header>
 
             <AppShell.Navbar p="md" bg="bid-blue">
-                <Stack spacing="md" justify="center">
+                <Stack gap="sm" justify="center">
                     {menu.map((item, index) => (
                         <NavLink 
                             key={index} 
@@ -31,7 +31,7 @@ export default function Root({menu}) {
                             style={{textDecoration:"none", width:"100%", color: 'inherit'}}
                         >
                             {(isActive) => (
-                                <Group py="4" pl="6" bg={isActive?"bid-orange":''} c="white" style={{borderRadius:"5px"}}>
+                                <Group py="3" pl="6" bg={isActive.isActive?"bid-orange":''} c="white" style={{borderRadius:"5px"}}>
                                     {item.icon}
                                     <Title order={5}>{item.title}</Title>
                                 </Group>
