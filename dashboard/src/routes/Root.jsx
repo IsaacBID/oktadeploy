@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { AppShell, Burger, CloseButton, Group, Text, Title } from "@mantine/core";    
+import { AppShell, Burger, Group, Stack, Text, Title } from "@mantine/core";    
 import { useDisclosure } from "@mantine/hooks";
 
 export default function Root({menu}) {
@@ -7,11 +7,11 @@ export default function Root({menu}) {
 
     return (
         <AppShell
-            header={{ height: 54 }}
-            navbar={{ width: 200, breakpoint: "sm", collapsed:{mobile: !opened} }}
-            footer={{ height: 32}}
+            header={{ height: 64 }}
+            navbar={{ width: 208, breakpoint: "sm", collapsed:{mobile: !opened} }}
+            //footer={{ height: 32}}
             padding="md"
-            layout="alt"
+            layout="default"
             withBorder={false}
         >
 
@@ -23,8 +23,7 @@ export default function Root({menu}) {
             </AppShell.Header>
 
             <AppShell.Navbar p="md" bg="bid-blue">
-                <Group direction="column" spacing="md" justify="center">
-                <CloseButton onClick={toggle} hiddenFrom="sm" variant="transparent" c="white"/>
+                <Stack spacing="md" justify="center">
                     {menu.map((item, index) => (
                         <NavLink 
                             key={index} 
@@ -39,7 +38,7 @@ export default function Root({menu}) {
                             )}
                         </NavLink>
                     ))}
-                </Group>
+                </Stack>
             </AppShell.Navbar>
 
             <AppShell.Main>
@@ -47,7 +46,7 @@ export default function Root({menu}) {
             </AppShell.Main>
 
             <AppShell.Footer >
-                <Text ta="center" c="dimmed">BeyondID &copy; {new Date().getFullYear()}</Text>
+                <Text ml={{sm: "13rem"}} ta="center" c="dimmed">BeyondID &copy; {new Date().getFullYear()}</Text>
             </AppShell.Footer>
 
         </AppShell>
