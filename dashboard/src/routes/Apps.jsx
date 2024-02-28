@@ -1,13 +1,18 @@
-import { TextInput, Button, Group, Box, ScrollArea, Flex, SimpleGrid, Paper, Text, Title, Checkbox } from '@mantine/core';
+import { TextInput, Box, Flex, SimpleGrid, Text, Title, Checkbox } from '@mantine/core';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { applist } from '../testdata';
+import { applist as testAppList } from '../testdata';
 import { IconSearch } from '@tabler/icons-react';
 
 export default function Apps() {
-    const [appList, setAppList] = useState(applist); 
     const redirect = useNavigate();
+    const [appList, setAppList] = useState([]); 
+    const [search, setSearch] = useState('');
+
+    useEffect(() => {
+        setAppList(testAppList)
+    }, []);
 
     useEffect(() => {
         const tenant = localStorage.getItem('OriginTenant');
@@ -22,14 +27,18 @@ export default function Apps() {
             <Box mih={"100%"} mt="lg" style={{border:"1px solid lightgray", borderRadius:"5px"}}>
                 <Box bg="#f4f4f4" p="md" style={{borderBottom:"1px solid lightgray", borderRadius:"5px 5px 0 0"}}>
                     <TextInput
-                        w="32%"
+                        w={{md:"32%", xs:"100%", sm:"50%"}}
                         placeholder="Search"
                         leftSection={<IconSearch />}
+                        value={search}
+                        onChange={(e) => setSearch(e.currentTarget.value)}
                     />
                 </Box>
 
                 <SimpleGrid cols={{xs: 1, sm: 2, md:3}} h="100%" p="md">
-                    {appList.map((app, index) => 
+                    {appList
+                    .filter(app => app.label.toLowerCase().includes(search.toLowerCase()))
+                    .map((app, index) => 
                         
                         <Flex
                             key={index} 
