@@ -1,14 +1,15 @@
-import { TextInput, Box, Flex, SimpleGrid, Text, Title, Checkbox } from '@mantine/core';
+import {  Box, Space, Title } from '@mantine/core';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {  IconSettings } from '@tabler/icons-react';
+import GridView from '../components/GridView';
 
 import { applist as testAppList } from '../testdata';
-import { IconSearch, IconSettings } from '@tabler/icons-react';
+import ListView from '../components/ListView';
 
 export default function Apps() {
     const redirect = useNavigate();
     const [appList, setAppList] = useState([]); 
-    const [search, setSearch] = useState('');
 
     useEffect(() => {
         //request list of apps
@@ -26,47 +27,30 @@ export default function Apps() {
         }
     }, []);
 
-    const toggleSelected = (index) => {
-        setAppList(appList.map((app, i) => 
-            i === index? { ...app, checked: !app.checked } : app
-        ));
-        console.log('toggled', appList[index].label)
+    const saveSelected = () => {
+        const selectedApps = appList.filter(app => app.checked).map(app => app.label);
+        console.log(selectedApps)
     }
+
+    const iconHandler = (app) => 
+        app._links.logo === undefined 
+        ? <Box w={24} h={24}><IconSettings /></Box>
+        : <img src={app._links.logo[0].href} alt={app.label} width="24" height="24" />
 
     return (
         <>
-            <Title order={1}>Review Apps to be downloaded</Title>
-            <Box mih={"100%"} mt="lg" style={{border:"1px solid lightgray", borderRadius:"5px"}}>
-                <Box bg="#f4f4f4" p="md" style={{borderBottom:"1px solid lightgray", borderRadius:"5px 5px 0 0"}}>
-                    <TextInput
-                        w={{md:"32%", xs:"100%", sm:"50%"}}
-                        placeholder="Search"
-                        leftSection={<IconSearch />}
-                        value={search}
-                        onChange={(e) => setSearch(e.currentTarget.value)}
-                    />
-                </Box>
+            <Title order={1}>Select Apps to backup</Title>
 
-                <SimpleGrid cols={{xs: 1, sm: 2, md:3}} h="100%" p="md">
-                    {appList
-                    .filter(app => app.label.toLowerCase().includes(search.toLowerCase()))
-                    .map((app, index) => 
-                        
-                        <Flex
-                            key={index} 
-                            style={{border: "1px solid lightgray", borderRadius:"5px"}}
-                            p="md"
-                            gap="xs"
-                        >
-                            {app._links.logo === undefined ? <Box w={24} h={24}><IconSettings /></Box>:
-                            <img src={app._links.logo[0].href} alt={app.label} width="24" height="24" />}
-                            <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{app.label}</Text>
-                            <Checkbox ml="auto" checked={app.checked} onChange={() => toggleSelected(index)} />
-                        </Flex>
-                    )}
-                </SimpleGrid>
+            <Space h="lg" />
 
-            </Box>
+            <GridView 
+                list={appList} 
+                listSetter={setAppList}  
+                saveHandler={saveSelected}
+                iconHandler={iconHandler}
+            />
+
+            
         </>
     )
 }
