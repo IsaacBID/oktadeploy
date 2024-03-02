@@ -43,11 +43,13 @@ export default function Apps() {
 
             <Space h="lg" />
 
-            <GridView 
+            <ListView 
                 list={appList} 
+                label="Select apps to backup"
                 listSetter={setAppList}  
                 saveHandler={saveSelected}
                 iconHandler={iconHandler}
+                collapsable={true}
             />
 
             

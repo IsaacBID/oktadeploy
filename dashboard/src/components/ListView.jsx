@@ -1,11 +1,12 @@
-import { Box, Button, Checkbox, Flex, Text, TextInput } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { ActionIcon, Box, Button, Checkbox, Flex, SimpleGrid, Text, TextInput, Title } from "@mantine/core";
+import { useDisclosure, useToggle } from "@mantine/hooks";
+import { IconSearch, IconLayoutGrid, IconList, IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import { useState } from "react";
-import { useHover } from '@mantine/hooks';
 
-export default function ListView({list, saveHandler, listSetter, iconHandler}){
+export default function ListView({label, list, saveHandler, listSetter, iconHandler, collapsable = false}){
     const [search, setSearch] = useState('');
-    const { hovered, ref } = useHover();
+    const [viewStyle, toggleViewStyle] = useToggle(['list', 'grid']);
+    const [collapsed, toggleCollapsed] = useDisclosure(false);
 
     const toggleSelected = (index) => {
         listSetter(list.map((app, i) => 
@@ -19,31 +20,67 @@ export default function ListView({list, saveHandler, listSetter, iconHandler}){
                 bg="#f4f4f4" 
                 p="sm" 
                 style={{borderBottom:"1px solid lightgray", borderRadius:"5px 5px 0 0"}}
-                direction={{xs:"column", sm:"row"}}
-                justify={{xs:"center", sm:"space-between"}}
-                gap={{xs:"sm", sm:"0"}}
+                direction={"column"}
+                gap="sm"
             >
-                <TextInput
-                    w={{md:"32%", xs:"100%", sm:"50%"}}
-                    placeholder="Search"
-                    leftSection={<IconSearch />}
-                    value={search}
-                    onChange={(e) => setSearch(e.currentTarget.value)}
-                />
-                <Button onClick={saveHandler}>Save selected</Button>
-            </Flex>
+                {(label != undefined || collapsable) &&
+                <Flex>
+                    {label != undefined && <Title order={4}>{label}</Title>}
+                    {collapsable && 
+                        <ActionIcon ml="auto" variant="transparent" onClick={()=>toggleCollapsed.toggle()}>
+                            {collapsed? <IconCaretRightFilled/> : <IconCaretDownFilled /> }
+                        </ActionIcon>
+                    }
+                </Flex>}
+                <Flex direction={{base: "column", xs: "row"}} gap="sm" {...(collapsed)&&{display:"none"}}>
+                    <Flex w={{base: "100%", sm:"70%"}} align="center" gap="sm">
+                        <ActionIcon variant="transparent" onClick={toggleViewStyle} aria-label="Toggle List / Grid view">
+                            {viewStyle === 'grid' ?<IconList/> : <IconLayoutGrid/>}
+                        </ActionIcon>
+                        <TextInput
+                            w="100%"
+                            placeholder="Search"
+                            leftSection={<IconSearch />}
+                            value={search}
+                            onChange={(e) => setSearch(e.currentTarget.value)}
+                        />
+                    </Flex>
+                    <Button w={{base:"100%", sm:"30%"}} onClick={saveHandler}>Save selected</Button>
+                </Flex>
 
-            <Flex direction="column">
+            </Flex>
+            
+            <Box {...(collapsed)&&{display:"none"}}>
+                {viewStyle === 'list'
+                ?<Flex direction="column">
+                    {list
+                    .filter(item => item.label.toLowerCase().includes(search.toLowerCase()))
+                    .map((item, index) => 
+                        <Flex key={index} p="sm" gap="xs">
+                            {iconHandler && iconHandler(item)}
+                            <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{item.label}</Text>
+                            <Checkbox ml="auto" checked={item.checked} onChange={() => toggleSelected(index)} />
+                        </Flex>
+                    )}
+                </Flex>
+                :<SimpleGrid cols={{xs: 1, sm: 2, md:3}} p="md">
                 {list
                 .filter(item => item.label.toLowerCase().includes(search.toLowerCase()))
                 .map((item, index) => 
-                    <Flex key={index} p="sm" gap="xs">
+                    <Flex
+                        key={index} 
+                        style={{border: "1px solid lightgray", borderRadius:"5px"}}
+                        p="md"
+                        gap="xs"
+                    >
                         {iconHandler && iconHandler(item)}
                         <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{item.label}</Text>
                         <Checkbox ml="auto" checked={item.checked} onChange={() => toggleSelected(index)} />
                     </Flex>
                 )}
-            </Flex>
+                </SimpleGrid>
+                }
+            </Box>
 
         </Box>
     )
