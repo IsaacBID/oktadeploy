@@ -74,7 +74,7 @@ export default function ListView({label, list, saveHandler, listSetter, iconHand
                         </Flex>
                     )}
                 </Flex>
-                :<SimpleGrid cols={{xs: 1, sm: 2, md:3}} p="md">
+                :<SimpleGrid cols={{base: 1, sm: 2, md:3}} p="md">
                 {list
                 .filter(item => itemLabelHandler(item).toLowerCase().includes(search.toLowerCase()))
                 .map((item, index) => 
