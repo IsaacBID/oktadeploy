@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Group, Space, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconArrowBigRight } from "@tabler/icons-react";
-import GridView from "../components/GridView";
 import { useState } from "react";
 
 export default function Sync() {

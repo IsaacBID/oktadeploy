@@ -3,7 +3,14 @@ import { useDisclosure, useToggle } from "@mantine/hooks";
 import { IconSearch, IconLayoutGrid, IconList, IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import { useState } from "react";
 
-export default function ListView({label, list, saveHandler, listSetter, iconHandler, collapsable = false}){
+const ItemContent = ({index, icon, toggleHandler, label, checked}) => 
+<>
+    {icon}
+    <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{label}</Text>
+    <Checkbox ml="auto" checked={checked} onChange={() => toggleHandler(index)} />
+</>
+
+export default function ListView({label, list, saveHandler, listSetter, iconHandler, itemLabelHandler, collapsable = false}){
     const [search, setSearch] = useState('');
     const [viewStyle, toggleViewStyle] = useToggle(['list', 'grid']);
     const [collapsed, toggleCollapsed] = useDisclosure(false);
@@ -54,28 +61,36 @@ export default function ListView({label, list, saveHandler, listSetter, iconHand
                 {viewStyle === 'list'
                 ?<Flex direction="column">
                     {list
-                    .filter(item => item.label.toLowerCase().includes(search.toLowerCase()))
+                    .filter(item => itemLabelHandler(item).toLowerCase().includes(search.toLowerCase()))
                     .map((item, index) => 
                         <Flex key={index} p="sm" gap="xs">
-                            {iconHandler && iconHandler(item)}
-                            <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{item.label}</Text>
-                            <Checkbox ml="auto" checked={item.checked} onChange={() => toggleSelected(index)} />
+                            <ItemContent 
+                                icon={iconHandler && iconHandler(item)} 
+                                toggleHandler={toggleSelected} 
+                                label={itemLabelHandler(item)} 
+                                checked={item.checked} 
+                                index={index}
+                            />
                         </Flex>
                     )}
                 </Flex>
                 :<SimpleGrid cols={{xs: 1, sm: 2, md:3}} p="md">
                 {list
-                .filter(item => item.label.toLowerCase().includes(search.toLowerCase()))
+                .filter(item => itemLabelHandler(item).toLowerCase().includes(search.toLowerCase()))
                 .map((item, index) => 
                     <Flex
                         key={index} 
                         style={{border: "1px solid lightgray", borderRadius:"5px"}}
-                        p="md"
+                        p="sm"
                         gap="xs"
                     >
-                        {iconHandler && iconHandler(item)}
-                        <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{item.label}</Text>
-                        <Checkbox ml="auto" checked={item.checked} onChange={() => toggleSelected(index)} />
+                        <ItemContent 
+                            icon={iconHandler && iconHandler(item)} 
+                            toggleHandler={toggleSelected} 
+                            label={itemLabelHandler(item)} 
+                            checked={item.checked} 
+                            index={index}
+                        />
                     </Flex>
                 )}
                 </SimpleGrid>

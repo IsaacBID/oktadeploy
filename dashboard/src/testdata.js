@@ -1818,3 +1818,244 @@ export const applist = [
         }
     }
 ]
+
+export const grouplist = [
+    {
+        "id": "00g9xjg94wtEvKbAd5d7",
+        "created": "2023-06-12T15:31:28.000Z",
+        "lastUpdated": "2023-06-12T15:31:28.000Z",
+        "lastMembershipUpdated": "2024-01-11T18:50:15.000Z",
+        "objectClass": [
+            "okta:user_group"
+        ],
+        "type": "BUILT_IN",
+        "profile": {
+            "name": "Everyone",
+            "description": "All users in your organization"
+        },
+        "_links": {
+            "logo": [
+                {
+                    "name": "medium",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-medium.30ce6d4085dff29412984e4c191bc874.png",
+                    "type": "image/png"
+                },
+                {
+                    "name": "large",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-large.c3cb8cda8ae0add1b4fe928f5844dbe3.png",
+                    "type": "image/png"
+                }
+            ],
+            "users": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00g9xjg94wtEvKbAd5d7/users"
+            },
+            "apps": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00g9xjg94wtEvKbAd5d7/apps"
+            }
+        }
+    },
+    {
+        "id": "00ga20dd2rAL6qf155d7",
+        "created": "2023-06-20T20:47:53.000Z",
+        "lastUpdated": "2023-06-20T20:47:53.000Z",
+        "lastMembershipUpdated": "2023-10-02T21:11:22.000Z",
+        "objectClass": [
+            "okta:user_group"
+        ],
+        "type": "OKTA_GROUP",
+        "profile": {
+            "name": "Generated 1",
+            "description": "random people imported using a generated CSV"
+        },
+        "_links": {
+            "logo": [
+                {
+                    "name": "medium",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-medium.30ce6d4085dff29412984e4c191bc874.png",
+                    "type": "image/png"
+                },
+                {
+                    "name": "large",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-large.c3cb8cda8ae0add1b4fe928f5844dbe3.png",
+                    "type": "image/png"
+                }
+            ],
+            "users": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga20dd2rAL6qf155d7/users"
+            },
+            "apps": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga20dd2rAL6qf155d7/apps"
+            }
+        }
+    },
+    {
+        "id": "00ga2znh9jvrM3VCK5d7",
+        "created": "2023-06-22T17:18:53.000Z",
+        "lastUpdated": "2023-06-22T17:18:53.000Z",
+        "lastMembershipUpdated": "2023-10-02T20:27:02.000Z",
+        "objectClass": [
+            "okta:user_group"
+        ],
+        "type": "OKTA_GROUP",
+        "profile": {
+            "name": "Marketing",
+            "description": "Marketing Marketing"
+        },
+        "_links": {
+            "logo": [
+                {
+                    "name": "medium",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-medium.30ce6d4085dff29412984e4c191bc874.png",
+                    "type": "image/png"
+                },
+                {
+                    "name": "large",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-large.c3cb8cda8ae0add1b4fe928f5844dbe3.png",
+                    "type": "image/png"
+                }
+            ],
+            "users": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga2znh9jvrM3VCK5d7/users"
+            },
+            "apps": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga2znh9jvrM3VCK5d7/apps"
+            }
+        }
+    },
+    {
+        "id": "00g9xjg973rJQ4rP85d7",
+        "created": "2023-06-12T15:31:30.000Z",
+        "lastUpdated": "2023-06-12T15:31:30.000Z",
+        "lastMembershipUpdated": "2023-06-12T15:31:30.000Z",
+        "objectClass": [
+            "okta:user_group"
+        ],
+        "type": "BUILT_IN",
+        "profile": {
+            "name": "Okta Administrators",
+            "description": "Okta manages this group, which contains all administrators in your organization."
+        },
+        "_links": {
+            "logo": [
+                {
+                    "name": "medium",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-medium.30ce6d4085dff29412984e4c191bc874.png",
+                    "type": "image/png"
+                },
+                {
+                    "name": "large",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-large.c3cb8cda8ae0add1b4fe928f5844dbe3.png",
+                    "type": "image/png"
+                }
+            ],
+            "users": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00g9xjg973rJQ4rP85d7/users"
+            },
+            "apps": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00g9xjg973rJQ4rP85d7/apps"
+            }
+        }
+    },
+    {
+        "id": "00ga1999we3sPglYK5d7",
+        "created": "2023-06-19T20:29:57.000Z",
+        "lastUpdated": "2023-06-19T20:29:57.000Z",
+        "lastMembershipUpdated": "2023-06-19T20:39:32.000Z",
+        "objectClass": [
+            "okta:user_group"
+        ],
+        "type": "OKTA_GROUP",
+        "profile": {
+            "name": "Promos Admins",
+            "description": null
+        },
+        "_links": {
+            "logo": [
+                {
+                    "name": "medium",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-medium.30ce6d4085dff29412984e4c191bc874.png",
+                    "type": "image/png"
+                },
+                {
+                    "name": "large",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-large.c3cb8cda8ae0add1b4fe928f5844dbe3.png",
+                    "type": "image/png"
+                }
+            ],
+            "users": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga1999we3sPglYK5d7/users"
+            },
+            "apps": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga1999we3sPglYK5d7/apps"
+            }
+        }
+    },
+    {
+        "id": "00ga19b6i0DEv2uxo5d7",
+        "created": "2023-06-19T20:29:49.000Z",
+        "lastUpdated": "2023-06-19T20:29:49.000Z",
+        "lastMembershipUpdated": "2023-06-19T20:39:12.000Z",
+        "objectClass": [
+            "okta:user_group"
+        ],
+        "type": "OKTA_GROUP",
+        "profile": {
+            "name": "Promos Users",
+            "description": ""
+        },
+        "_links": {
+            "logo": [
+                {
+                    "name": "medium",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-medium.30ce6d4085dff29412984e4c191bc874.png",
+                    "type": "image/png"
+                },
+                {
+                    "name": "large",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-large.c3cb8cda8ae0add1b4fe928f5844dbe3.png",
+                    "type": "image/png"
+                }
+            ],
+            "users": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga19b6i0DEv2uxo5d7/users"
+            },
+            "apps": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga19b6i0DEv2uxo5d7/apps"
+            }
+        }
+    },
+    {
+        "id": "00ga2zopo1PrmI9Vy5d7",
+        "created": "2023-06-22T17:18:17.000Z",
+        "lastUpdated": "2023-06-22T17:18:17.000Z",
+        "lastMembershipUpdated": "2023-10-02T20:27:02.000Z",
+        "objectClass": [
+            "okta:user_group"
+        ],
+        "type": "OKTA_GROUP",
+        "profile": {
+            "name": "Security",
+            "description": "Secure Department"
+        },
+        "_links": {
+            "logo": [
+                {
+                    "name": "medium",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-medium.30ce6d4085dff29412984e4c191bc874.png",
+                    "type": "image/png"
+                },
+                {
+                    "name": "large",
+                    "href": "https://ok12static.oktacdn.com/assets/img/logos/groups/odyssey/okta-large.c3cb8cda8ae0add1b4fe928f5844dbe3.png",
+                    "type": "image/png"
+                }
+            ],
+            "users": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga2zopo1PrmI9Vy5d7/users"
+            },
+            "apps": {
+                "href": "https://dev-07110725.okta.com/api/v1/groups/00ga2zopo1PrmI9Vy5d7/apps"
+            }
+        }
+    }
+]
