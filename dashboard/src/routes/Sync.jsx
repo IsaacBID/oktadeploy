@@ -1,7 +1,12 @@
 import { Box, Button, Flex, Group, Space, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconArrowBigRight } from "@tabler/icons-react";
-import { useState } from "react";
+import { IconArrowBigRight, IconSettings } from "@tabler/icons-react";
+import { useEffect, useState } from "react";
+import ListView from "../components/ListView";
+
+import { applist as testAppList, grouplist as testGroupList } from '../testdata';
+
+
 
 export default function Sync() {
     const tenantSetup = useForm({
@@ -13,11 +18,15 @@ export default function Sync() {
         }
     });
 
-    const [appList, setAppList] = useState([
-        {label: 'App1', checked: true},
-        {label: 'App2', checked: true},
-        {label: 'App3', checked: true},
-    ]);
+    const [appList, setAppList] = useState([]); 
+
+    useEffect(() => {
+        //request list of apps
+        
+        //adds selected prop to each app 
+        const appsWithSelectedProp = testAppList.map(app => ({ ...app, checked: true }));
+        setAppList(appsWithSelectedProp);
+    }, []);
 
     return (
         <>
@@ -69,23 +78,29 @@ export default function Sync() {
         <Title order={3}>Apps</Title>
         <Space h="sm" />
         <Flex direction="row" justify="center" align="center" gap={16} p="md">
-            <Box style={{border:"1px solid lightgray", borderRadius:"5px"}}>
-                <Flex
-                    bg="#f4f4f4" 
-                >
-
-                </Flex>
-
-            </Box>
+            <ListView 
+                list={appList} 
+                listSetter={setAppList}  
+                //saveHandler={saveSelectedApps}
+                iconHandler={(app) => 
+                    app._links.logo === undefined 
+                    ? <Box w={24} h={24}><IconSettings /></Box>
+                    : <img src={app._links.logo[0].href} alt={app.label} width="24" height="24" />
+                }
+                itemLabelHandler={(app) => app.label}
+            />
             <IconArrowBigRight />
-            <Box style={{border:"1px solid lightgray", borderRadius:"5px"}}>
-                <Flex
-                    bg="#f4f4f4" 
-                >
-
-                </Flex>
-
-            </Box>
+            <ListView 
+                list={appList.filter(app => app.checked)} 
+                listSetter={setAppList}  
+                //saveHandler={saveSelectedApps}
+                iconHandler={(app) => 
+                    app._links.logo === undefined 
+                    ? <Box w={24} h={24}><IconSettings /></Box>
+                    : <img src={app._links.logo[0].href} alt={app.label} width="24" height="24" />
+                }
+                itemLabelHandler={(app) => app.label}
+            />
         </Flex>
        
 
