@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink as RouteLink, Outlet } from "react-router-dom";
 import { AppShell, Burger, Group, Stack, Text, Title } from "@mantine/core";    
 import { useDisclosure } from "@mantine/hooks";
 
@@ -8,7 +8,7 @@ export default function Root({menu}) {
     return (
         <AppShell
             header={{ height: 64 }}
-            navbar={{ width: 208, breakpoint: "sm", collapsed:{mobile: !opened} }}
+            navbar={{ width: 208, breakpoint: "sm", collapsed:{mobile: !opened, desktop: !opened} }}
             //footer={{ height: 32}}
             padding="md"
             layout="default"
@@ -17,26 +17,49 @@ export default function Root({menu}) {
 
             <AppShell.Header>
                 <Group h="100%" px="md" c="white" bg="bid-blue">
-                    <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" color="white"/>
+                    <Burger opened={opened} onClick={toggle} size="sm" color="white"/>
                     <Title order={3}>Okta Deploy</Title>
+                    <Group ml="auto" gap="0">
+                        {menu.filter((item)=>item.title.endsWith('*')).map((item, index) => 
+                            <RouteLink 
+                                key={index}
+                                to={item.path}
+                                style={{textDecoration:"none", color: 'inherit'}}
+                            >
+                                {(isActive) => 
+                                        <Title 
+                                            px="sm"
+                                            py="xs" 
+                                            bg={isActive.isActive?"bid-orange":''} 
+                                            c="white" 
+                                            order={5}
+                                            style={{borderRadius:"5px"}}
+                                        >
+                                            {item.title.replace('*', '')}
+                                        </Title>
+                                }
+                            </RouteLink>
+                        )}
+                            
+                    </Group>
                 </Group>
             </AppShell.Header>
 
-            <AppShell.Navbar p="md" bg="bid-blue">
-                <Stack gap="sm" justify="center">
+            <AppShell.Navbar p="0" bg="bid-blue" zIndex={200}>
+                <Stack gap="0" justify="center">
                     {menu.map((item, index) => (
-                        <NavLink 
+                        <RouteLink 
                             key={index} 
                             to={item.path} 
                             style={{textDecoration:"none", width:"100%", color: 'inherit'}}
                         >
                             {(isActive) => (
-                                <Group py="3" pl="6" bg={isActive.isActive?"bid-orange":''} c="white" style={{borderRadius:"5px"}}>
+                                <Group p="7" bg={isActive.isActive?"bid-orange":''} c="white">
                                     {item.icon}
                                     <Title order={5}>{item.title}</Title>
                                 </Group>
                             )}
-                        </NavLink>
+                        </RouteLink>
                     ))}
                 </Stack>
             </AppShell.Navbar>
@@ -46,7 +69,13 @@ export default function Root({menu}) {
             </AppShell.Main>
 
             <AppShell.Footer >
-                <Text ml={{sm: "13rem"}} ta="center" c="dimmed">BeyondID &copy; {new Date().getFullYear()}</Text>
+                <Text 
+                    //ml={{sm: "13rem"}} 
+                    ta="center" 
+                    c="dimmed"
+                >
+                    BeyondID &copy; {new Date().getFullYear()}
+                </Text>
             </AppShell.Footer>
 
         </AppShell>
