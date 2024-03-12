@@ -56,7 +56,7 @@ export default function Root({menu}) {
                             {(isActive) => (
                                 <Group p="7" bg={isActive.isActive?"bid-orange":''} c="white">
                                     {item.icon}
-                                    <Title order={5}>{item.title}</Title>
+                                    <Title order={5}>{item.title.replace('*', '')}</Title>
                                 </Group>
                             )}
                         </RouteLink>

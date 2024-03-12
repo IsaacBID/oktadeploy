@@ -8,7 +8,7 @@ import { applist as testAppList, grouplist as testGroupList } from '../testdata'
 
 
 
-export default function Sync() {
+export default function Deploy() {
     const tenantSetup = useForm({
         initialValues: {
             sourceUrl: '',
@@ -77,7 +77,7 @@ export default function Sync() {
 
         <Title order={3}>Apps</Title>
         <Space h="sm" />
-        <Flex direction="row" justify="center" align="center" gap={16} p="md">
+        <Flex direction="row" justify="center" align="start" gap={16} p="md">
             <ListView 
                 list={appList} 
                 listSetter={setAppList}  
@@ -89,7 +89,9 @@ export default function Sync() {
                 }
                 itemLabelHandler={(app) => app.label}
             />
+            <Box h="100%">
             <IconArrowBigRight />
+            </Box>
             <ListView 
                 list={appList.filter(app => app.checked)} 
                 listSetter={setAppList}  

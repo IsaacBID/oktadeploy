@@ -1,25 +1,21 @@
-import { ActionIcon, Box, Button, Checkbox, Flex, SimpleGrid, Text, TextInput, Title } from "@mantine/core";
+import { ActionIcon, Box, Button, Flex, SimpleGrid, Text, TextInput, Title } from "@mantine/core";
 import { useDisclosure, useToggle } from "@mantine/hooks";
 import { IconSearch, IconLayoutGrid, IconList, IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import { useState } from "react";
 
-const ItemContent = ({index, icon, toggleHandler, label, checked}) => 
+const ItemContent = ({icon, label, rightSection}) => 
 <>
     {icon}
     <Text style={{whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis"}}>{label}</Text>
-    <Checkbox ml="auto" checked={checked} onChange={() => toggleHandler(index)} />
+    {rightSection}
 </>
 
-export default function ListView({label, list, saveHandler, listSetter, iconHandler, itemLabelHandler, collapsable = false}){
+export default function ListView({label, list, saveHandler, iconHandler, itemLabelHandler, collapsable = false, rightSection = () => {}}){
     const [search, setSearch] = useState('');
     const [viewStyle, toggleViewStyle] = useToggle(['list', 'grid']);
     const [collapsed, toggleCollapsed] = useDisclosure(false);
 
-    const toggleSelected = (index) => {
-        listSetter(list.map((app, i) => 
-            i === index? { ...app, checked: !app.checked } : app
-        ));
-    }
+    
 
     return (
         <Box style={{border:"1px solid lightgray", borderRadius:"5px"}}>
@@ -65,34 +61,30 @@ export default function ListView({label, list, saveHandler, listSetter, iconHand
                     .map((item, index) => 
                         <Flex key={index} p="sm" gap="xs">
                             <ItemContent 
-                                icon={iconHandler && iconHandler(item)} 
-                                toggleHandler={toggleSelected} 
+                                icon={iconHandler ? (typeof iconHandler === 'function' ? iconHandler(item) : iconHandler) : undefined} 
                                 label={itemLabelHandler(item)} 
-                                checked={item.checked} 
-                                index={index}
+                                rightSection={rightSection(item)}
                             />
                         </Flex>
                     )}
                 </Flex>
                 :<SimpleGrid cols={{base: 1, sm: 2, md:3}} p="md">
-                {list
-                .filter(item => itemLabelHandler(item).toLowerCase().includes(search.toLowerCase()))
-                .map((item, index) => 
-                    <Flex
-                        key={index} 
-                        style={{border: "1px solid lightgray", borderRadius:"5px"}}
-                        p="sm"
-                        gap="xs"
-                    >
-                        <ItemContent 
-                            icon={iconHandler && iconHandler(item)} 
-                            toggleHandler={toggleSelected} 
-                            label={itemLabelHandler(item)} 
-                            checked={item.checked} 
-                            index={index}
-                        />
-                    </Flex>
-                )}
+                    {list
+                    .filter(item => itemLabelHandler(item).toLowerCase().includes(search.toLowerCase()))
+                    .map((item, index) => 
+                        <Flex
+                            key={index} 
+                            style={{border: "1px solid lightgray", borderRadius:"5px"}}
+                            p="sm"
+                            gap="xs"
+                        >
+                            <ItemContent 
+                                icon={iconHandler ? (typeof iconHandler === 'function' ? iconHandler(item) : iconHandler) : undefined} 
+                                label={itemLabelHandler(item)}
+                                rightSection={rightSection(item)} 
+                            />
+                        </Flex>
+                    )}
                 </SimpleGrid>
                 }
             </Box>

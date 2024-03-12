@@ -1,4 +1,4 @@
-import {  Box, Space, Title } from '@mantine/core';
+import {  Box, Checkbox, Space, Title } from '@mantine/core';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {  IconSettings, IconUsersGroup } from '@tabler/icons-react';
@@ -6,7 +6,7 @@ import {  IconSettings, IconUsersGroup } from '@tabler/icons-react';
 import { applist as testAppList, grouplist as testGroupList } from '../testdata';
 import ListView from '../components/ListView';
 
-export default function Apps() {
+export default function Backup() {
     const redirect = useNavigate();
     const [appList, setAppList] = useState([]); 
     const [groupList, setGroupList] = useState([]);
@@ -39,6 +39,11 @@ export default function Apps() {
         console.log(selectedGroups)
     }
 
+    const itemToggler = (item, list, setter) => {
+        setter(list.map((i) => 
+            i === item? { ...i, checked: !i.checked } : i
+        ));
+    }
 
     return (
         <>  
@@ -46,8 +51,6 @@ export default function Apps() {
             <Space h="lg" />
             <ListView 
                 list={appList} 
-                label="Select apps"
-                listSetter={setAppList}  
                 saveHandler={saveSelectedApps}
                 iconHandler={(app) => 
                     app._links.logo === undefined 
@@ -56,16 +59,30 @@ export default function Apps() {
                 }
                 itemLabelHandler={(app) => app.label}
                 collapsable={true}
+                label={"Select Apps"}
+                rightSection={(app) =>
+                    <Checkbox 
+                        ml="auto" 
+                        checked={app.checked} 
+                        onChange={() => itemToggler(app, appList, setAppList)}
+                    />
+                }
             />
             <Space h="lg" />
             <ListView
                 list={groupList} 
-                label="Select Groups"
-                listSetter={setGroupList}  
+                label="Select Groups" 
                 saveHandler={saveSelectedGroups}
-                iconHandler={(group) => <IconUsersGroup />}
+                iconHandler={<IconUsersGroup />}
                 itemLabelHandler={(group) => group.profile.name}
                 collapsable={true}
+                rightSection={(group) =>
+                    <Checkbox
+                        ml="auto"
+                        checked={group.checked} 
+                        onChange={() => itemToggler(group, groupList, setGroupList)}
+                    />
+                }
             />
             <Space h="lg" />
             
