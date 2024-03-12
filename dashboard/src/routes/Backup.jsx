@@ -1,13 +1,11 @@
 import {  Box, Checkbox, Space, Title } from '@mantine/core';
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import {  IconSettings, IconUsersGroup } from '@tabler/icons-react';
 
 import { applist as testAppList, grouplist as testGroupList } from '../testdata';
 import ListView from '../components/ListView';
 
 export default function Backup() {
-    const redirect = useNavigate();
     const [appList, setAppList] = useState([]); 
     const [groupList, setGroupList] = useState([]);
 
@@ -21,28 +19,21 @@ export default function Backup() {
         setGroupList(groupWithSelectedProp);
     }, []);
 
-    useEffect(() => {
-        //make this validation routerlevel
-        const tenant = localStorage.getItem('OriginTenant');
-        if (tenant == null || tenant == undefined) {
-            redirect('/');
-        }
-    }, []);
-
-    const saveSelectedApps = () => {
-        const selectedApps = appList.filter(app => app.checked).map(app => app.label);
-        console.log(selectedApps)
-    }
-
-    const saveSelectedGroups = () => {
-        const selectedGroups = groupList.filter(group => group.checked).map(group => group.id);
-        console.log(selectedGroups)
-    }
 
     const itemToggler = (item, list, setter) => {
         setter(list.map((i) => 
             i === item? { ...i, checked: !i.checked } : i
         ));
+    }
+
+    const toggleAll = (list, setter) => {
+        const allChecked = list.every(i => i.checked);
+        return (
+            <Checkbox 
+                checked={allChecked} 
+                onChange={() => setter(list.map(i => ({ ...i, checked: !allChecked })))}
+            />
+        );
     }
 
     return (
@@ -51,7 +42,6 @@ export default function Backup() {
             <Space h="lg" />
             <ListView 
                 list={appList} 
-                saveHandler={saveSelectedApps}
                 iconHandler={(app) => 
                     app._links.logo === undefined 
                     ? <Box w={24} h={24}><IconSettings /></Box>
@@ -67,12 +57,12 @@ export default function Backup() {
                         onChange={() => itemToggler(app, appList, setAppList)}
                     />
                 }
+                listAction={() => toggleAll(appList, setAppList)}
             />
             <Space h="lg" />
             <ListView
                 list={groupList} 
                 label="Select Groups" 
-                saveHandler={saveSelectedGroups}
                 iconHandler={<IconUsersGroup />}
                 itemLabelHandler={(group) => group.profile.name}
                 collapsable={true}
@@ -83,6 +73,7 @@ export default function Backup() {
                         onChange={() => itemToggler(group, groupList, setGroupList)}
                     />
                 }
+                listAction={() => toggleAll(groupList, setGroupList)}
             />
             <Space h="lg" />
             

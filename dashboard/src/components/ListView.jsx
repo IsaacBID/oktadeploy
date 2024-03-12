@@ -1,4 +1,4 @@
-import { ActionIcon, Box, Button, Flex, SimpleGrid, Text, TextInput, Title } from "@mantine/core";
+import { ActionIcon, Box, Flex, SimpleGrid, Text, TextInput, Title } from "@mantine/core";
 import { useDisclosure, useToggle } from "@mantine/hooks";
 import { IconSearch, IconLayoutGrid, IconList, IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import { useState } from "react";
@@ -10,12 +10,12 @@ const ItemContent = ({icon, label, rightSection}) =>
     {rightSection}
 </>
 
-export default function ListView({label, list, saveHandler, iconHandler, itemLabelHandler, collapsable = false, rightSection = () => {}}){
+export default function ListView({label, list, itemLabelHandler, iconHandler = () => {}, collapsable = false, rightSection = () => {}, listAction=() => {}}){
     const [search, setSearch] = useState('');
     const [viewStyle, toggleViewStyle] = useToggle(['list', 'grid']);
     const [collapsed, toggleCollapsed] = useDisclosure(false);
 
-    
+    const icon = (item) => typeof iconHandler === 'function' ? iconHandler(item) : iconHandler;
 
     return (
         <Box style={{border:"1px solid lightgray", borderRadius:"5px"}}>
@@ -35,20 +35,19 @@ export default function ListView({label, list, saveHandler, iconHandler, itemLab
                         </ActionIcon>
                     }
                 </Flex>}
-                <Flex direction={{base: "column", xs: "row"}} gap="sm" {...(collapsed)&&{display:"none"}}>
-                    <Flex w={{base: "100%", sm:"70%"}} align="center" gap="sm">
-                        <ActionIcon variant="transparent" onClick={toggleViewStyle} aria-label="Toggle List / Grid view">
-                            {viewStyle === 'grid' ?<IconList/> : <IconLayoutGrid/>}
-                        </ActionIcon>
-                        <TextInput
-                            w="100%"
-                            placeholder="Search"
-                            leftSection={<IconSearch />}
-                            value={search}
-                            onChange={(e) => setSearch(e.currentTarget.value)}
-                        />
-                    </Flex>
-                    <Button w={{base:"100%", sm:"30%"}} onClick={saveHandler}>Save selected</Button>
+               
+                <Flex align="center" gap="sm" {...(collapsed)&&{display:"none"}}>
+                    <ActionIcon variant="transparent" onClick={toggleViewStyle} aria-label="Toggle List / Grid view">
+                        {viewStyle === 'grid' ?<IconList/> : <IconLayoutGrid/>}
+                    </ActionIcon>
+                    <TextInput
+                        w="100%"
+                        placeholder="Search"
+                        leftSection={<IconSearch />}
+                        value={search}
+                        onChange={(e) => setSearch(e.currentTarget.value)}
+                    />
+                    {listAction()}
                 </Flex>
 
             </Flex>
@@ -61,7 +60,7 @@ export default function ListView({label, list, saveHandler, iconHandler, itemLab
                     .map((item, index) => 
                         <Flex key={index} p="sm" gap="xs">
                             <ItemContent 
-                                icon={iconHandler ? (typeof iconHandler === 'function' ? iconHandler(item) : iconHandler) : undefined} 
+                                icon={icon(item)} 
                                 label={itemLabelHandler(item)} 
                                 rightSection={rightSection(item)}
                             />
@@ -79,7 +78,7 @@ export default function ListView({label, list, saveHandler, iconHandler, itemLab
                             gap="xs"
                         >
                             <ItemContent 
-                                icon={iconHandler ? (typeof iconHandler === 'function' ? iconHandler(item) : iconHandler) : undefined} 
+                                icon={icon(item)} 
                                 label={itemLabelHandler(item)}
                                 rightSection={rightSection(item)} 
                             />
