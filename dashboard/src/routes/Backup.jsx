@@ -49,7 +49,7 @@ export default function Backup() {
                 }
                 itemLabelHandler={(app) => app.label}
                 collapsable={true}
-                label={"Select Apps"}
+                label={`Select Apps (${appList.filter(app => app.checked).length} / ${appList.length} selected)`}
                 rightSection={(app) =>
                     <Checkbox 
                         ml="auto" 
@@ -62,7 +62,7 @@ export default function Backup() {
             <Space h="lg" />
             <ListView
                 list={groupList} 
-                label="Select Groups" 
+                label={`Select Groups (${groupList.filter(group => group.checked).length} / ${groupList.length} selected)`} 
                 iconHandler={<IconUsersGroup />}
                 itemLabelHandler={(group) => group.profile.name}
                 collapsable={true}
